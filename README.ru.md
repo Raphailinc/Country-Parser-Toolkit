@@ -1,31 +1,33 @@
 # Country Parser Toolkit
 
-Сбор данных о странах: получаем список стран из RestCountries, парсим инфобокс Википедии, чистим и считаем статистику. Можно использовать как CLI или как библиотеку.
+[![CI](https://github.com/Raphailinc/Country-Parser-Toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/Raphailinc/Country-Parser-Toolkit/actions/workflows/ci.yml)
 
-## Быстрый старт
+[English](README.md) · [Русский](README.ru.md)
+
+Небольшой проект сбора и обработки сведений о странах: HTML-парсинг, нормализация записей и сводная статистика.
+
+## Возможности
+
+- Получение списка стран и формирование адресов Wikipedia.
+- Извлечение полей из HTML-инфоблоков.
+- Удаление дублей и сводки по населению, площади и валютам.
+- Проверка парсинга на локальных HTML-образцах.
+
+## Локальный запуск
+
 ```bash
 python -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 python -m parse_algorithm --limit 10 -o output.json
 ```
 
-CLI выводит JSON со списком стран и статистикой (топ по населению, средняя площадь по часовому поясу, страны с евро). `--timezone` позволяет выбрать целевой часовой пояс (по умолчанию UTC+3).
+## Проверки
 
-## API
-- `fetch_country_list(api_url=...) -> list[str]` — список стран из RestCountries.
-- `generate_country_urls(names) -> list[str]` — ссылки на Википедию.
-- `fetch_country_data(url) -> CountryData | None` — парсинг страницы страны.
-- `deduplicate_countries(list[CountryData])` — уникализация по имени.
-- `compute_stats(countries, target_timezone)` — сводка статистики.
-- `parse_infobox(html)` — разбор HTML инфобокса (используется в тестах/офлайн сценариях).
-
-## Тесты
 ```bash
-pytest
+python -m pytest
 ```
 
-## Заметки
-- Используется `requests` + `beautifulsoup4`.
-- CLI сохраняет JSON в файл (если указан `-o`) или выводит в stdout.
-- В тестах используется локальный HTML-фрагмент — сеть не требуется. Для реального запуска потребуется интернет.
+## Условия запуска и границы проекта
+
+Живой сбор требует интернета и зависит от структуры внешних API и HTML. Локальные тесты парсера не подтверждают текущую доступность этих сервисов.
